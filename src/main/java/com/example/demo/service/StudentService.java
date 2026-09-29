@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Student;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.StudentRepository;
 
 @Service
@@ -16,45 +17,38 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    // GET all students
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
-    // GET student by ID
     public Student getStudentById(Integer id) {
         return studentRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Student not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
     }
 
-    // CREATE student
     public Student createStudent(Student student) {
+        Validation.requireText(student.getStudentFirstName(), "First name");
+        Validation.requireText(student.getStudentLastName(), "Last name");
+        student.setStudentId(0); // always insert a new row
         return studentRepository.save(student);
     }
 
-    // UPDATE student
-    public Student updateStudent(Integer id, Student studentDetails) {
+    public Student updateStudent(Integer id, Student details) {
+        Student student = getStudentById(id);
 
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Student not found with id: " + id));
-
-        student.setStudentFirstName(studentDetails.getStudentFirstName());
-        student.setStudentLastName(studentDetails.getStudentLastName());
-        student.setStudentEmail(studentDetails.getStudentEmail());
+        student.setStudentFirstName(Validation.requireText(details.getStudentFirstName(), "First name"));
+        student.setStudentLastName(Validation.requireText(details.getStudentLastName(), "Last name"));
+        student.setStudentAge(details.getStudentAge());
+        student.setStudentPhone(details.getStudentPhone());
+        student.setStudentEmail(details.getStudentEmail());
 
         return studentRepository.save(student);
     }
 
-    // DELETE student
     public void deleteStudent(Integer id) {
-
         if (!studentRepository.existsById(id)) {
-            throw new RuntimeException(
-                    "Student not found with id: " + id);
+            throw new ResourceNotFoundException("Student not found with id: " + id);
         }
-
         studentRepository.deleteById(id);
     }
 }

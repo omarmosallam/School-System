@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,9 +23,11 @@ public class Department {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "department")
     private List<Teacher> teachers = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "department")
     private List<Course> courses = new ArrayList<>();
 

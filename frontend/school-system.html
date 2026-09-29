@@ -1,877 +1,599 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>School System</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --board: #1e3a34;
-        --board-2: #2b4d45;
-        --chalk: #f4f1e8;
-        --paper: #f6f7f5;
-        --card: #ffffff;
-        --ink: #1b2622;
-        --muted: #66746e;
-        --line: #dde3df;
-        --accent: #e8b931;
-        --accent-ink: #2a2100;
-        --danger: #b3382c;
-        --ok: #2e7d5b;
-        --radius: 8px;
-      }
-      * {
-        box-sizing: border-box;
-      }
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-      }
-      body {
-        font-family:
-          "Figtree",
-          system-ui,
-          -apple-system,
-          "Segoe UI",
-          Roboto,
-          sans-serif;
-        background: var(--paper);
-        color: var(--ink);
-        font-size: 15px;
-        line-height: 1.5;
-      }
-      button,
-      input,
-      select {
-        font: inherit;
-        color: inherit;
-      }
-      :focus-visible {
-        outline: 3px solid var(--accent);
-        outline-offset: 2px;
-      }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>School System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --board: #1e3a34;
+    --board-2: #2b4d45;
+    --chalk: #f4f1e8;
+    --paper: #f6f7f5;
+    --card: #ffffff;
+    --ink: #1b2622;
+    --muted: #66746e;
+    --line: #dde3df;
+    --accent: #e8b931;
+    --accent-ink: #2a2100;
+    --danger: #b3382c;
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  button, input, select { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-      .app {
-        display: grid;
-        grid-template-columns: 250px 1fr;
-        min-height: 100%;
-      }
+  .app { display: grid; grid-template-columns: 250px 1fr; min-height: 100%; }
 
-      /* Sidebar */
-      aside {
-        background: var(--board);
-        color: var(--chalk);
-        padding: 24px 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        position: sticky;
-        top: 0;
-        height: 100vh;
-      }
-      .brand {
-        font-size: 22px;
-        font-weight: 700;
-        padding: 0 10px;
-        letter-spacing: -0.01em;
-      }
-      .brand small {
-        display: block;
-        font-size: 13px;
-        font-weight: 400;
-        opacity: 0.7;
-        margin-top: 2px;
-      }
-      nav {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
-      nav button {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: none;
-        border: 0;
-        color: inherit;
-        text-align: left;
-        padding: 10px 12px;
-        border-radius: var(--radius);
-        cursor: pointer;
-        font-weight: 500;
-      }
-      nav button:hover {
-        background: var(--board-2);
-      }
-      nav button[aria-current="true"] {
-        background: var(--chalk);
-        color: var(--board);
-        font-weight: 600;
-      }
-      nav .count {
-        font-size: 12px;
-        min-width: 24px;
-        text-align: center;
-        padding: 1px 7px;
-        border-radius: 99px;
-        background: rgba(255, 255, 255, 0.15);
-      }
-      nav button[aria-current="true"] .count {
-        background: var(--board);
-        color: var(--chalk);
-      }
+  aside {
+    background: var(--board);
+    color: var(--chalk);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+  .brand { font-size: 22px; font-weight: 700; padding: 0 10px; letter-spacing: -0.01em; }
+  .brand small { display: block; font-size: 13px; font-weight: 400; opacity: .7; margin-top: 2px; }
+  nav { display: flex; flex-direction: column; gap: 4px; }
+  nav button {
+    display: flex; justify-content: space-between; align-items: center;
+    background: none; border: 0; color: inherit; text-align: left;
+    padding: 10px 12px; border-radius: var(--radius); cursor: pointer; font-weight: 500;
+  }
+  nav button:hover { background: var(--board-2); }
+  nav button[aria-current="true"] { background: var(--chalk); color: var(--board); font-weight: 600; }
+  nav .count {
+    font-size: 12px; min-width: 24px; text-align: center; padding: 1px 7px;
+    border-radius: 99px; background: rgba(255,255,255,.15);
+  }
+  nav button[aria-current="true"] .count { background: var(--board); color: var(--chalk); }
 
-      .conn {
-        margin-top: auto;
-        font-size: 13px;
-        display: grid;
-        gap: 8px;
-      }
-      .conn label {
-        opacity: 0.75;
-      }
-      .conn input {
-        width: 100%;
-        padding: 8px 10px;
-        border-radius: 6px;
-        border: 1px solid var(--board-2);
-        background: var(--board-2);
-        color: var(--chalk);
-      }
-      .status {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .dot {
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-        background: #8a958f;
-      }
-      .dot.ok {
-        background: #5fd39a;
-      }
-      .dot.bad {
-        background: #ff8a7a;
-      }
+  .conn { margin-top: auto; font-size: 13px; display: grid; gap: 8px; }
+  .conn label { opacity: .75; }
+  .conn input {
+    width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--board-2);
+    background: var(--board-2); color: var(--chalk);
+  }
+  .status { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #8a958f; }
+  .dot.ok { background: #5fd39a; }
+  .dot.bad { background: #ff8a7a; }
 
-      /* Main */
-      main {
-        padding: 32px 40px 60px;
-        max-width: 1200px;
-        width: 100%;
-      }
-      .head {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 16px;
-        flex-wrap: wrap;
-        margin-bottom: 20px;
-      }
-      h1 {
-        margin: 0;
-        font-size: 30px;
-        letter-spacing: -0.02em;
-        line-height: 1.15;
-      }
-      .sub {
-        color: var(--muted);
-        margin: 4px 0 0;
-      }
-      .tools {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-      .search {
-        padding: 9px 12px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: var(--card);
-        min-width: 220px;
-      }
+  main { padding: 32px 40px 60px; max-width: 1280px; width: 100%; }
+  .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+  h1 { margin: 0; font-size: 30px; letter-spacing: -0.02em; line-height: 1.15; }
+  .sub { color: var(--muted); margin: 4px 0 0; }
+  .tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .search {
+    padding: 9px 12px; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--card); min-width: 220px;
+  }
 
-      .btn {
-        border: 1px solid var(--line);
-        background: var(--card);
-        padding: 9px 16px;
-        border-radius: var(--radius);
-        cursor: pointer;
-        font-weight: 600;
-      }
-      .btn:hover {
-        border-color: #b9c4be;
-      }
-      .btn.primary {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: var(--accent-ink);
-      }
-      .btn.primary:hover {
-        filter: brightness(0.96);
-      }
-      .btn.danger {
-        background: var(--danger);
-        border-color: var(--danger);
-        color: #fff;
-      }
-      .btn.small {
-        padding: 5px 11px;
-        font-size: 13px;
-      }
-      .btn:disabled {
-        opacity: 0.55;
-        cursor: not-allowed;
-      }
+  .btn {
+    border: 1px solid var(--line); background: var(--card); padding: 9px 16px;
+    border-radius: var(--radius); cursor: pointer; font-weight: 600;
+  }
+  .btn:hover { border-color: #b9c4be; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn.primary:hover { filter: brightness(.96); }
+  .btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+  .btn.small { padding: 5px 11px; font-size: 13px; }
+  .btn:disabled { opacity: .55; cursor: not-allowed; }
 
-      .banner {
-        background: #fff4ef;
-        border: 1px solid #f0c3b8;
-        color: #6d2116;
-        padding: 14px 16px;
-        border-radius: var(--radius);
-        margin-bottom: 18px;
-      }
-      .banner strong {
-        display: block;
-        margin-bottom: 4px;
-      }
-      .banner ul {
-        margin: 6px 0 0;
-        padding-left: 20px;
-      }
-      .banner code {
-        background: rgba(0, 0, 0, 0.06);
-        padding: 1px 5px;
-        border-radius: 4px;
-      }
+  .banner {
+    background: #fff4ef; border: 1px solid #f0c3b8; color: #6d2116;
+    padding: 14px 16px; border-radius: var(--radius); margin-bottom: 18px;
+  }
+  .banner strong { display: block; margin-bottom: 4px; }
+  .banner ul { margin: 6px 0 0; padding-left: 20px; }
+  .banner code { background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 4px; }
 
-      .table-wrap {
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        overflow-x: auto;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th,
-      td {
-        padding: 12px 16px;
-        text-align: left;
-        white-space: nowrap;
-      }
-      th {
-        font-size: 13px;
-        color: var(--muted);
-        font-weight: 600;
-        background: #fafbfa;
-        border-bottom: 1px solid var(--line);
-      }
-      td {
-        border-bottom: 1px solid #eef1ef;
-      }
-      tbody tr:last-child td {
-        border-bottom: 0;
-      }
-      tbody tr:hover {
-        background: #fbfcfb;
-      }
-      td.actions,
-      th.actions {
-        text-align: right;
-        width: 1%;
-      }
-      td.actions {
-        display: table-cell;
-      }
-      td.actions .btn + .btn {
-        margin-left: 6px;
-      }
-      td.id {
-        color: var(--muted);
-        width: 1%;
-      }
+  .table-wrap { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 12px 16px; text-align: left; white-space: nowrap; }
+  th { font-size: 13px; color: var(--muted); font-weight: 600; background: #fafbfa; border-bottom: 1px solid var(--line); }
+  td { border-bottom: 1px solid #eef1ef; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: #fbfcfb; }
+  th.actions, td.actions { text-align: right; width: 1%; }
+  td.actions .btn + .btn { margin-left: 6px; }
+  td.id { color: var(--muted); width: 1%; }
+  .tag {
+    display: inline-block; padding: 1px 9px; border-radius: 99px; font-size: 12px; font-weight: 600;
+    background: #e8efe9; color: #24493d;
+  }
+  .tag.DROPPED { background: #f6dcd7; color: #7a2519; }
+  .tag.COMPLETED { background: #e3e9f6; color: #263b73; }
+  .dash { color: #a5b0aa; }
 
-      .empty {
-        padding: 48px 20px;
-        text-align: center;
-        color: var(--muted);
-      }
-      .empty h2 {
-        margin: 0 0 6px;
-        color: var(--ink);
-        font-size: 18px;
-      }
+  .empty { padding: 48px 20px; text-align: center; color: var(--muted); }
+  .empty h2 { margin: 0 0 6px; color: var(--ink); font-size: 18px; }
 
-      /* Dialog */
-      dialog {
-        border: 0;
-        border-radius: 12px;
-        padding: 0;
-        width: min(480px, 92vw);
-        box-shadow: 0 20px 60px rgba(20, 30, 26, 0.35);
-      }
-      dialog::backdrop {
-        background: rgba(20, 32, 28, 0.55);
-      }
-      dialog form {
-        padding: 24px;
-        display: grid;
-        gap: 14px;
-      }
-      dialog h2 {
-        margin: 0 0 4px;
-        font-size: 20px;
-      }
-      .field {
-        display: grid;
-        gap: 5px;
-      }
-      .field label {
-        font-weight: 600;
-        font-size: 14px;
-      }
-      .field input,
-      .field select {
-        padding: 10px 12px;
-        border: 1px solid #c8d1cc;
-        border-radius: 6px;
-        background: #fff;
-        width: 100%;
-      }
-      .field input:focus,
-      .field select:focus {
-        border-color: var(--board);
-        outline: 3px solid rgba(232, 185, 49, 0.5);
-        outline-offset: 0;
-      }
-      .form-error {
-        color: var(--danger);
-        font-size: 14px;
-        min-height: 1em;
-      }
-      .dialog-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        margin-top: 4px;
-      }
+  dialog {
+    border: 0; border-radius: 12px; padding: 0; width: min(500px, 92vw);
+    box-shadow: 0 20px 60px rgba(20, 30, 26, .35);
+  }
+  dialog::backdrop { background: rgba(20, 32, 28, .55); }
+  dialog form { padding: 24px; display: grid; gap: 14px; }
+  dialog h2 { margin: 0 0 4px; font-size: 20px; }
+  .field { display: grid; gap: 5px; }
+  .field label { font-weight: 600; font-size: 14px; }
+  .field input, .field select {
+    padding: 10px 12px; border: 1px solid #c8d1cc; border-radius: 6px; background: #fff; width: 100%;
+  }
+  .field input:focus, .field select:focus { border-color: var(--board); outline: 3px solid rgba(232,185,49,.5); outline-offset: 0; }
+  .hint { font-size: 13px; color: var(--muted); }
+  .form-error { color: var(--danger); font-size: 14px; min-height: 1em; }
+  .dialog-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
 
-      .toast {
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        background: var(--board);
-        color: var(--chalk);
-        padding: 12px 18px;
-        border-radius: var(--radius);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-        opacity: 0;
-        transform: translateY(8px);
-        pointer-events: none;
-        transition:
-          opacity 0.2s,
-          transform 0.2s;
-      }
-      .toast.show {
-        opacity: 1;
-        transform: none;
-      }
-      .toast.error {
-        background: var(--danger);
-      }
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; background: var(--board); color: var(--chalk);
+    padding: 12px 18px; border-radius: var(--radius); box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .2s, transform .2s;
+    max-width: 420px;
+  }
+  .toast.show { opacity: 1; transform: none; }
+  .toast.error { background: var(--danger); }
 
-      @media (max-width: 800px) {
-        .app {
-          grid-template-columns: 1fr;
-        }
-        aside {
-          position: static;
-          height: auto;
-        }
-        nav {
-          flex-direction: row;
-          flex-wrap: wrap;
-        }
-        main {
-          padding: 24px 16px 60px;
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .toast {
-          transition: none;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="app">
-      <aside>
-        <div class="brand">School System<small>Admin console</small></div>
-        <nav id="nav" aria-label="Sections"></nav>
-        <div class="conn">
-          <div class="status">
-            <span class="dot" id="dot"></span
-            ><span id="statusText">Not connected</span>
-          </div>
-          <label for="baseUrl">Backend address</label>
-          <input id="baseUrl" type="text" spellcheck="false" />
-        </div>
-      </aside>
+  @media (max-width: 800px) {
+    .app { grid-template-columns: 1fr; }
+    aside { position: static; height: auto; }
+    nav { flex-direction: row; flex-wrap: wrap; }
+    main { padding: 24px 16px 60px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand">School System<small>Admin console</small></div>
+    <nav id="nav" aria-label="Sections"></nav>
+    <div class="conn">
+      <div class="status"><span class="dot" id="dot"></span><span id="statusText">Not connected</span></div>
+      <label for="baseUrl">Backend address</label>
+      <input id="baseUrl" type="text" spellcheck="false">
+    </div>
+  </aside>
 
-      <main>
-        <div class="head">
-          <div>
-            <h1 id="title"></h1>
-            <p class="sub" id="subtitle"></p>
-          </div>
-          <div class="tools">
-            <input
-              class="search"
-              id="search"
-              type="search"
-              placeholder="Search this list"
-              aria-label="Search this list"
-            />
-            <button class="btn" id="refresh">Refresh</button>
-            <button class="btn primary" id="addBtn"></button>
-          </div>
-        </div>
-
-        <div id="error"></div>
-        <div class="table-wrap"><div id="tableHost"></div></div>
-      </main>
+  <main>
+    <div class="head">
+      <div>
+        <h1 id="title"></h1>
+        <p class="sub" id="subtitle"></p>
+      </div>
+      <div class="tools">
+        <input class="search" id="search" type="search" placeholder="Search this list" aria-label="Search this list">
+        <button class="btn" id="refresh">Refresh</button>
+        <button class="btn primary" id="addBtn"></button>
+      </div>
     </div>
 
-    <dialog id="dlg">
-      <form method="dialog" id="form" novalidate>
-        <h2 id="dlgTitle"></h2>
-        <div id="fields" style="display: grid; gap: 14px"></div>
-        <div class="form-error" id="formError" role="alert"></div>
-        <div class="dialog-actions">
-          <button type="button" class="btn" id="cancelBtn">Cancel</button>
-          <button type="submit" class="btn primary" id="saveBtn">Save</button>
-        </div>
-      </form>
-    </dialog>
+    <div id="error"></div>
+    <div class="table-wrap"><div id="tableHost"></div></div>
+  </main>
+</div>
 
-    <dialog id="confirmDlg">
-      <form method="dialog" style="padding: 24px; display: grid; gap: 14px">
-        <h2 id="confirmTitle" style="margin: 0"></h2>
-        <p id="confirmText" style="margin: 0; color: var(--muted)"></p>
-        <div class="dialog-actions">
-          <button type="button" class="btn" id="confirmNo">Keep it</button>
-          <button type="button" class="btn danger" id="confirmYes">
-            Delete
-          </button>
-        </div>
-      </form>
-    </dialog>
+<dialog id="dlg">
+  <form method="dialog" id="form" novalidate>
+    <h2 id="dlgTitle"></h2>
+    <div id="fields" style="display:grid;gap:14px"></div>
+    <div class="form-error" id="formError" role="alert"></div>
+    <div class="dialog-actions">
+      <button type="button" class="btn" id="cancelBtn">Cancel</button>
+      <button type="submit" class="btn primary" id="saveBtn">Save</button>
+    </div>
+  </form>
+</dialog>
 
-    <div class="toast" id="toast" role="status"></div>
+<dialog id="confirmDlg">
+  <form method="dialog" style="padding:24px;display:grid;gap:14px">
+    <h2 id="confirmTitle" style="margin:0"></h2>
+    <p id="confirmText" style="margin:0;color:var(--muted)"></p>
+    <div class="dialog-actions">
+      <button type="button" class="btn" id="confirmNo">Keep it</button>
+      <button type="button" class="btn danger" id="confirmYes">Delete</button>
+    </div>
+  </form>
+</dialog>
 
-    <script>
-      /* ============================================================
-   CONFIGURATION: edit this section to match your Spring Boot app
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ============================================================
+   CONFIGURATION (already matched to your Spring Boot entities)
    ------------------------------------------------------------
-   path    = the REST endpoint (must match your @RequestMapping)
-   fields  = the columns and form inputs. "name" must match the
-             field name in your entity / JSON exactly.
-             type: text | email | number | date | tel
+   idField : the id property in the JSON (Student uses studentId,
+             everything else uses id)
+   title   : how a record is named inside dropdowns and tables
+   fields  : type = text | email | tel | number | date | select | relation
+             relation -> "to" names another resource; the form sends
+             {<target idField>: chosenId}, which the services resolve.
    ============================================================ */
-      const DEFAULT_BASE_URL = "http://localhost:8080";
+const DEFAULT_BASE_URL = "http://localhost:8080";
 
-      const RESOURCES = {
-        students: {
-          label: "Students",
-          singular: "student",
-          path: "/api/students",
-          fields: [
-            {
-              name: "firstName",
-              label: "First name",
-              type: "text",
-              required: true,
-            },
-            {
-              name: "lastName",
-              label: "Last name",
-              type: "text",
-              required: true,
-            },
-            { name: "email", label: "Email", type: "email" },
-            { name: "age", label: "Age", type: "number" },
-            { name: "phone", label: "Phone", type: "tel" }
-          ],
-        },
-        teachers: {
-          label: "Teachers",
-          singular: "teacher",
-          path: "/api/teachers",
-          fields: [
-            {
-              name: "firstName",
-              label: "First name",
-              type: "text",
-              required: true,
-            },
-            {
-              name: "lastName",
-              label: "Last name",
-              type: "text",
-              required: true,
-            },
-            { name: "email", label: "Email", type: "email" },
-            { name: "subject", label: "Subject", type: "text" },
-          ],
-        },
-        courses: {
-          label: "Courses",
-          singular: "course",
-          path: "/api/courses",
-          fields: [
-            {
-              name: "name",
-              label: "Course name",
-              type: "text",
-              required: true,
-            },
-            { name: "description", label: "Description", type: "text" },
-            { name: "credits", label: "Credits", type: "number" },
-          ],
-        },
-      };
-      /* ============================================================ */
+const RESOURCES = {
+  departments: {
+    label: "Departments", singular: "department", path: "/api/departments", idField: "id",
+    title: (r) => r.name,
+    fields: [
+      { name: "name", label: "Department name", type: "text", required: true },
+    ],
+  },
+  teachers: {
+    label: "Teachers", singular: "teacher", path: "/api/teachers", idField: "id",
+    title: (r) => `${r.firstName} ${r.lastName}`,
+    fields: [
+      { name: "firstName",  label: "First name", type: "text",  required: true },
+      { name: "lastName",   label: "Last name",  type: "text",  required: true },
+      { name: "email",      label: "Email",      type: "email", required: true },
+      { name: "department", label: "Department", type: "relation", to: "departments" },
+    ],
+  },
+  courses: {
+    label: "Courses", singular: "course", path: "/api/courses", idField: "id",
+    title: (r) => `${r.code} – ${r.name}`,
+    fields: [
+      { name: "name",       label: "Course name", type: "text",   required: true },
+      { name: "code",       label: "Course code", type: "text",   required: true },
+      { name: "credits",    label: "Credits",     type: "number", step: "1", min: "0" },
+      { name: "teacher",    label: "Teacher",     type: "relation", to: "teachers" },
+      { name: "department", label: "Department",  type: "relation", to: "departments" },
+    ],
+  },
+  students: {
+    label: "Students", singular: "student", path: "/api/students", idField: "studentId",
+    title: (r) => `${r.studentFirstName} ${r.studentLastName}`,
+    fields: [
+      { name: "studentFirstName", label: "First name",   type: "text",  required: true },
+      { name: "studentLastName",  label: "Last name",    type: "text",  required: true },
+      { name: "studentAge",       label: "Age",          type: "number", step: "1", min: "0" },
+      { name: "studentPhone",     label: "Phone number", type: "tel" },
+      { name: "studentEmail",     label: "Email",        type: "email" },
+    ],
+  },
+  enrollments: {
+    label: "Enrollments", singular: "enrollment", path: "/api/enrollments", idField: "id",
+    title: (r) => `#${r.id}`,
+    fields: [
+      { name: "student",        label: "Student", type: "relation", to: "students", required: true },
+      { name: "course",         label: "Course",  type: "relation", to: "courses",  required: true },
+      { name: "enrollmentDate", label: "Enrollment date", type: "date" },
+      { name: "grade",          label: "Grade",   type: "number", step: "any", min: "0" },
+      { name: "status",         label: "Status",  type: "select", options: ["ACTIVE", "COMPLETED", "DROPPED"] },
+    ],
+  },
+};
+/* ============================================================ */
 
-      const $ = (id) => document.getElementById(id);
-      const state = {
-        key: Object.keys(RESOURCES)[0],
-        rows: [],
-        editingId: null,
-        deleteId: null,
-        counts: {},
-      };
+const $ = (id) => document.getElementById(id);
+const state = { key: Object.keys(RESOURCES)[0], rows: [], editingId: null, deleteId: null, counts: {} };
 
-      let baseUrl = DEFAULT_BASE_URL;
-      try {
-        baseUrl = localStorage.getItem("school.baseUrl") || DEFAULT_BASE_URL;
-      } catch (e) {}
-      $("baseUrl").value = baseUrl;
+let baseUrl = DEFAULT_BASE_URL;
+try { baseUrl = localStorage.getItem("school.baseUrl") || DEFAULT_BASE_URL; } catch (e) {}
+$("baseUrl").value = baseUrl;
 
-      const res = () => RESOURCES[state.key];
-      const url = (suffix = "") =>
-        baseUrl.replace(/\/+$/, "") + res().path + suffix;
+const res = () => RESOURCES[state.key];
+const rid = (row) => row[res().idField];
+const root = () => baseUrl.replace(/\/+$/, "");
+const url = (suffix = "") => root() + res().path + suffix;
+const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
-      /* ---------- API ---------- */
-      async function api(method, endpoint, body) {
-        const opts = { method, headers: { Accept: "application/json" } };
-        if (body !== undefined) {
-          opts.headers["Content-Type"] = "application/json";
-          opts.body = JSON.stringify(body);
-        }
-        let r;
-        try {
-          r = await fetch(endpoint, opts);
-        } catch (e) {
-          const err = new Error("network");
-          err.network = true;
-          throw err;
-        }
-        if (!r.ok) {
-          let msg = "";
-          try {
-            const j = await r.json();
-            msg = j.message || j.error || JSON.stringify(j);
-          } catch (e) {}
-          const err = new Error(msg || `Request failed (${r.status})`);
-          err.status = r.status;
-          throw err;
-        }
-        if (r.status === 204) return null;
-        const text = await r.text();
-        return text ? JSON.parse(text) : null;
-      }
+function esc(v) {
+  return String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
 
-      function unwrap(data) {
-        if (Array.isArray(data)) return data;
-        if (data && Array.isArray(data.content)) return data.content; // Spring Page
-        return [];
-      }
+/* ---------- API ---------- */
+async function api(method, endpoint, body) {
+  const opts = { method, headers: { "Accept": "application/json" } };
+  if (body !== undefined) {
+    opts.headers["Content-Type"] = "application/json";
+    opts.body = JSON.stringify(body);
+  }
+  let r;
+  try { r = await fetch(endpoint, opts); }
+  catch (e) { const err = new Error("network"); err.network = true; throw err; }
 
-      /* ---------- UI helpers ---------- */
-      function toast(msg, isError) {
-        const t = $("toast");
-        t.textContent = msg;
-        t.className = "toast show" + (isError ? " error" : "");
-        clearTimeout(toast.timer);
-        toast.timer = setTimeout(() => (t.className = "toast"), 3000);
-      }
+  const text = await r.text();
+  let data = null;
+  if (text) { try { data = JSON.parse(text); } catch (e) { data = text; } }
 
-      function setStatus(ok, text) {
-        $("dot").className = "dot " + (ok ? "ok" : "bad");
-        $("statusText").textContent = text;
-      }
+  if (!r.ok) {
+    const msg = (data && typeof data === "object" && (data.message || data.error)) || (typeof data === "string" ? data : "");
+    const err = new Error(msg || `Request failed (${r.status})`);
+    err.status = r.status;
+    throw err;
+  }
+  return data;
+}
 
-      function showError(err) {
-        const host = $("error");
-        if (!err) {
-          host.innerHTML = "";
-          return;
-        }
-        if (err.network) {
-          setStatus(false, "Can't reach backend");
-          host.innerHTML = `<div class="banner"><strong>Can't reach the backend at ${esc(baseUrl)}</strong>
+function unwrap(data) {
+  if (Array.isArray(data)) return data;
+  if (data && Array.isArray(data.content)) return data.content;
+  return [];
+}
+
+async function fetchList(key) {
+  return unwrap(await api("GET", root() + RESOURCES[key].path));
+}
+
+/* ---------- UI helpers ---------- */
+function toast(msg, isError) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.className = "toast show" + (isError ? " error" : "");
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => (t.className = "toast"), 3500);
+}
+
+function setStatus(ok, text) {
+  $("dot").className = "dot " + (ok ? "ok" : "bad");
+  $("statusText").textContent = text;
+}
+
+function showError(err) {
+  const host = $("error");
+  if (!err) { host.innerHTML = ""; return; }
+  if (err.network) {
+    setStatus(false, "Can't reach backend");
+    host.innerHTML = `<div class="banner"><strong>Can't reach the backend at ${esc(baseUrl)}</strong>
       Check these in order:
       <ul>
         <li>Spring Boot is running (look for "Started DemoApplication" in the terminal).</li>
         <li>The address in the bottom left matches your server port.</li>
-        <li>CORS is enabled in Spring Boot. Add the <code>CorsConfig</code> class shown in the chat, then restart.</li>
-        <li>The endpoint <code>${esc(res().path)}</code> exists in your controller.</li>
+        <li>The <code>CorsConfig</code> class is in your project and you restarted the server.</li>
       </ul></div>`;
-        } else if (err.status === 404) {
-          host.innerHTML = `<div class="banner"><strong>Endpoint not found: ${esc(res().path)}</strong>
-      Change <code>path</code> in the RESOURCES section at the top of this file's script so it matches your controller's <code>@RequestMapping</code>.</div>`;
-        } else {
-          host.innerHTML = `<div class="banner"><strong>Something went wrong</strong>${esc(err.message)}</div>`;
-        }
-      }
+  } else if (err.status === 404) {
+    host.innerHTML = `<div class="banner"><strong>Endpoint not found: ${esc(res().path)}</strong>
+      Make sure the controller for this section exists and the backend was restarted after adding it.</div>`;
+  } else {
+    host.innerHTML = `<div class="banner"><strong>Something went wrong</strong>${esc(err.message)}</div>`;
+  }
+}
 
-      function esc(v) {
-        return String(v ?? "").replace(
-          /[&<>"']/g,
-          (c) =>
-            ({
-              "&": "&amp;",
-              "<": "&lt;",
-              ">": "&gt;",
-              '"': "&quot;",
-              "'": "&#39;",
-            })[c],
-        );
-      }
+/* ---------- Cell rendering ---------- */
+function cellHtml(f, row) {
+  const v = row[f.name];
+  if (v === null || v === undefined || v === "") return `<span class="dash">–</span>`;
+  if (f.type === "relation") return esc(RESOURCES[f.to].title(v));
+  if (f.type === "select") return `<span class="tag ${esc(v)}">${esc(v)}</span>`;
+  return esc(v);
+}
 
-      /* ---------- Rendering ---------- */
-      function renderNav() {
-        $("nav").innerHTML = Object.entries(RESOURCES)
-          .map(
-            ([k, r]) =>
-              `<button data-key="${k}" aria-current="${k === state.key}">
+function searchText(f, row) {
+  const v = row[f.name];
+  if (v === null || v === undefined) return "";
+  return (f.type === "relation" ? RESOURCES[f.to].title(v) : String(v)).toLowerCase();
+}
+
+/* ---------- Rendering ---------- */
+function renderNav() {
+  $("nav").innerHTML = Object.entries(RESOURCES).map(([k, r]) =>
+    `<button data-key="${k}" aria-current="${k === state.key}">
        <span>${esc(r.label)}</span><span class="count">${state.counts[k] ?? "–"}</span>
-     </button>`,
-          )
-          .join("");
-      }
+     </button>`).join("");
+}
 
-      function renderHeader() {
-        const r = res();
-        $("title").textContent = r.label;
-        $("subtitle").textContent =
-          `Add, edit and remove ${r.label.toLowerCase()}.`;
-        $("addBtn").textContent = `Add ${r.singular}`;
-        $("search").value = "";
-      }
+function renderHeader() {
+  const r = res();
+  $("title").textContent = r.label;
+  $("subtitle").textContent = `Add, edit and remove ${r.label.toLowerCase()}.`;
+  $("addBtn").textContent = `Add ${r.singular}`;
+  $("search").value = "";
+}
 
-      function renderTable() {
-        const r = res();
-        const q = $("search").value.trim().toLowerCase();
-        const rows = state.rows.filter(
-          (row) =>
-            !q ||
-            r.fields.some((f) =>
-              String(row[f.name] ?? "")
-                .toLowerCase()
-                .includes(q),
-            ) ||
-            String(row.id ?? "").includes(q),
-        );
+function renderTable() {
+  const r = res();
+  const q = $("search").value.trim().toLowerCase();
+  const rows = state.rows.filter((row) =>
+    !q || String(rid(row) ?? "").includes(q) || r.fields.some((f) => searchText(f, row).includes(q)));
 
-        if (!rows.length) {
-          $("tableHost").innerHTML = `<div class="empty">
+  if (!rows.length) {
+    $("tableHost").innerHTML = `<div class="empty">
       <h2>${state.rows.length ? "No matches" : `No ${esc(r.label.toLowerCase())} yet`}</h2>
       ${state.rows.length ? "Try a different search." : `Use “Add ${esc(r.singular)}” to create the first one.`}</div>`;
-          return;
-        }
+    return;
+  }
 
-        const head = r.fields.map((f) => `<th>${esc(f.label)}</th>`).join("");
-        const body = rows
-          .map(
-            (row) => `<tr>
-      <td class="id">${esc(row.id)}</td>
-      ${r.fields.map((f) => `<td>${esc(row[f.name])}</td>`).join("")}
+  const head = r.fields.map((f) => `<th>${esc(f.label)}</th>`).join("");
+  const body = rows.map((row) => `<tr>
+      <td class="id">${esc(rid(row))}</td>
+      ${r.fields.map((f) => `<td>${cellHtml(f, row)}</td>`).join("")}
       <td class="actions">
-        <button class="btn small" data-edit="${esc(row.id)}">Edit</button>
-        <button class="btn small" data-del="${esc(row.id)}">Delete</button>
-      </td></tr>`,
-          )
-          .join("");
+        <button class="btn small" data-edit="${esc(rid(row))}">Edit</button>
+        <button class="btn small" data-del="${esc(rid(row))}">Delete</button>
+      </td></tr>`).join("");
 
-        $("tableHost").innerHTML =
-          `<table><thead><tr><th>ID</th>${head}<th class="actions"></th></tr></thead><tbody>${body}</tbody></table>`;
-      }
+  $("tableHost").innerHTML = `<table><thead><tr><th>ID</th>${head}<th class="actions"></th></tr></thead><tbody>${body}</tbody></table>`;
+}
 
-      /* ---------- Data loading ---------- */
-      async function load() {
-        showError(null);
-        $("tableHost").innerHTML = `<div class="empty">Loading…</div>`;
-        try {
-          state.rows = unwrap(await api("GET", url()));
-          state.counts[state.key] = state.rows.length;
-          setStatus(true, "Connected");
-          renderNav();
-          renderTable();
-        } catch (err) {
-          state.rows = [];
-          $("tableHost").innerHTML = "";
-          showError(err);
-        }
-      }
+/* ---------- Data loading ---------- */
+async function load() {
+  showError(null);
+  $("tableHost").innerHTML = `<div class="empty">Loading…</div>`;
+  try {
+    state.rows = await fetchList(state.key);
+    state.counts[state.key] = state.rows.length;
+    setStatus(true, "Connected");
+    renderNav();
+    renderTable();
+  } catch (err) {
+    state.rows = [];
+    $("tableHost").innerHTML = "";
+    showError(err);
+  }
+}
 
-      async function loadCounts() {
-        for (const [k, r] of Object.entries(RESOURCES)) {
-          if (k === state.key) continue;
-          try {
-            const data = unwrap(
-              await api("GET", baseUrl.replace(/\/+$/, "") + r.path),
-            );
-            state.counts[k] = data.length;
-          } catch (e) {
-            /* ignore: shown when the user opens that tab */
-          }
-        }
-        renderNav();
-      }
+async function loadCounts() {
+  for (const k of Object.keys(RESOURCES)) {
+    if (k === state.key) continue;
+    try { state.counts[k] = (await fetchList(k)).length; } catch (e) { /* shown when that tab is opened */ }
+  }
+  renderNav();
+}
 
-      /* ---------- Form dialog ---------- */
-      function openForm(id) {
-        const r = res();
-        state.editingId = id ?? null;
-        const row =
-          id != null ? state.rows.find((x) => String(x.id) === String(id)) : {};
-        $("dlgTitle").textContent =
-          id != null ? `Edit ${r.singular}` : `Add ${r.singular}`;
-        $("formError").textContent = "";
-        $("fields").innerHTML = r.fields
-          .map(
-            (f) => `
-    <div class="field">
-      <label for="f_${f.name}">${esc(f.label)}${f.required ? " *" : ""}</label>
-      <input id="f_${f.name}" name="${f.name}" type="${f.type || "text"}"
-             value="${esc(row[f.name])}" ${f.required ? "required" : ""} ${f.type === "number" ? 'step="any"' : ""}>
-    </div>`,
-          )
-          .join("");
-        $("dlg").showModal();
-        const first = $("fields").querySelector("input");
-        if (first) first.focus();
-      }
+/* ---------- Form dialog ---------- */
+function fieldHtml(f, row, lists) {
+  const id = "f_" + f.name;
+  const label = `<label for="${id}">${esc(f.label)}${f.required ? " *" : ""}</label>`;
+  const value = row[f.name];
 
-      $("form").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const r = res();
-        const payload = {};
-        for (const f of r.fields) {
-          const el = $("f_" + f.name);
-          const raw = el.value.trim();
-          if (f.required && !raw) {
-            $("formError").textContent = `${f.label} is required.`;
-            el.focus();
-            return;
-          }
-          payload[f.name] =
-            raw === "" ? null : f.type === "number" ? Number(raw) : raw;
-        }
-        const btn = $("saveBtn");
-        btn.disabled = true;
-        try {
-          if (state.editingId != null)
-            await api("PUT", url("/" + state.editingId), payload);
-          else await api("POST", url(), payload);
-          $("dlg").close();
-          toast(
-            state.editingId != null
-              ? "Changes saved"
-              : `${cap(r.singular)} added`,
-          );
-          await load();
-        } catch (err) {
-          $("formError").textContent = err.network
-            ? "Can't reach the backend. Check that it is running."
-            : err.message;
-        } finally {
-          btn.disabled = false;
-        }
-      });
+  if (f.type === "relation") {
+    const target = RESOURCES[f.to];
+    const selected = value ? value[target.idField] : "";
+    const opts = (lists[f.to] || []).map((o) => {
+      const oid = o[target.idField];
+      return `<option value="${esc(oid)}" ${String(oid) === String(selected) ? "selected" : ""}>${esc(target.title(o))}</option>`;
+    }).join("");
+    const none = f.required ? `<option value="">Choose a ${esc(target.singular)}…</option>` : `<option value="">None</option>`;
+    const hint = (lists[f.to] || []).length ? "" : `<div class="hint">No ${esc(target.label.toLowerCase())} exist yet. Add one in the ${esc(target.label)} section first.</div>`;
+    return `<div class="field">${label}<select id="${id}" ${f.required ? "required" : ""}>${none}${opts}</select>${hint}</div>`;
+  }
 
-      $("cancelBtn").onclick = () => $("dlg").close();
+  if (f.type === "select") {
+    const opts = f.options.map((o) => `<option value="${esc(o)}" ${o === value ? "selected" : ""}>${esc(cap(o.toLowerCase()))}</option>`).join("");
+    return `<div class="field">${label}<select id="${id}">${opts}</select></div>`;
+  }
 
-      /* ---------- Delete ---------- */
-      function askDelete(id) {
-        state.deleteId = id;
-        $("confirmTitle").textContent = `Delete this ${res().singular}?`;
-        $("confirmText").textContent =
-          `Record #${id} will be removed permanently.`;
-        $("confirmDlg").showModal();
-      }
-      $("confirmNo").onclick = () => $("confirmDlg").close();
-      $("confirmYes").onclick = async () => {
-        $("confirmDlg").close();
-        try {
-          await api("DELETE", url("/" + state.deleteId));
-          toast(`${cap(res().singular)} deleted`);
-          await load();
-        } catch (err) {
-          toast(err.network ? "Can't reach the backend" : err.message, true);
-        }
-      };
+  const attrs = [
+    f.step ? `step="${f.step}"` : "",
+    f.min !== undefined ? `min="${f.min}"` : "",
+    f.required ? "required" : "",
+  ].join(" ");
+  return `<div class="field">${label}<input id="${id}" type="${f.type || "text"}" value="${esc(value)}" ${attrs}></div>`;
+}
 
-      const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+async function openForm(id) {
+  const r = res();
+  state.editingId = id ?? null;
+  const row = id != null ? state.rows.find((x) => String(rid(x)) === String(id)) || {} : {};
 
-      /* ---------- Events ---------- */
-      $("nav").addEventListener("click", (e) => {
-        const b = e.target.closest("button[data-key]");
-        if (!b) return;
-        state.key = b.dataset.key;
-        renderNav();
-        renderHeader();
-        load();
-      });
-      $("tableHost").addEventListener("click", (e) => {
-        const ed = e.target.closest("[data-edit]");
-        const de = e.target.closest("[data-del]");
-        if (ed) openForm(ed.dataset.edit);
-        if (de) askDelete(de.dataset.del);
-      });
-      $("addBtn").onclick = () => openForm(null);
-      $("refresh").onclick = () => {
-        load();
-        loadCounts();
-      };
-      $("search").addEventListener("input", renderTable);
-      $("baseUrl").addEventListener("change", (e) => {
-        baseUrl = e.target.value.trim() || DEFAULT_BASE_URL;
-        try {
-          localStorage.setItem("school.baseUrl", baseUrl);
-        } catch (err) {}
-        load();
-        loadCounts();
-      });
+  // load the lists needed by relation dropdowns
+  const lists = {};
+  const needed = [...new Set(r.fields.filter((f) => f.type === "relation").map((f) => f.to))];
+  try {
+    await Promise.all(needed.map(async (k) => { lists[k] = await fetchList(k); }));
+  } catch (err) {
+    toast(err.network ? "Can't reach the backend" : err.message, true);
+    return;
+  }
 
-      /* ---------- Start ---------- */
-      renderNav();
-      renderHeader();
-      load().then(loadCounts);
-    </script>
-  </body>
+  $("dlgTitle").textContent = id != null ? `Edit ${r.singular}` : `Add ${r.singular}`;
+  $("formError").textContent = "";
+  const editing = id != null;
+  $("fields").innerHTML = r.fields.map((f) => fieldHtml(f, editing ? row : prefill(f), lists)).join("");
+  $("dlg").showModal();
+  const first = $("fields").querySelector("input, select");
+  if (first) first.focus();
+}
+
+// sensible defaults for new records
+function prefill(f) {
+  const blank = {};
+  if (f.type === "date") blank[f.name] = new Date().toISOString().slice(0, 10);
+  if (f.type === "select") blank[f.name] = f.options[0];
+  return blank;
+}
+
+$("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const r = res();
+  const payload = {};
+
+  for (const f of r.fields) {
+    const el = $("f_" + f.name);
+    const raw = el.value.trim();
+
+    if (f.required && !raw) {
+      $("formError").textContent = f.type === "relation" ? `Choose a ${RESOURCES[f.to].singular}.` : `${f.label} is required.`;
+      el.focus();
+      return;
+    }
+    if (f.type === "relation") {
+      payload[f.name] = raw ? { [RESOURCES[f.to].idField]: Number(raw) } : null;
+    } else if (f.type === "number") {
+      payload[f.name] = raw === "" ? null : Number(raw);
+    } else {
+      payload[f.name] = raw === "" ? null : raw;
+    }
+  }
+
+  const btn = $("saveBtn");
+  btn.disabled = true;
+  try {
+    if (state.editingId != null) await api("PUT", url("/" + state.editingId), payload);
+    else await api("POST", url(), payload);
+    $("dlg").close();
+    toast(state.editingId != null ? "Changes saved" : `${cap(r.singular)} added`);
+    await load();
+    loadCounts();
+  } catch (err) {
+    $("formError").textContent = err.network ? "Can't reach the backend. Check that it is running." : err.message;
+  } finally { btn.disabled = false; }
+});
+
+$("cancelBtn").onclick = () => $("dlg").close();
+
+/* ---------- Delete ---------- */
+function askDelete(id) {
+  state.deleteId = id;
+  $("confirmTitle").textContent = `Delete this ${res().singular}?`;
+  $("confirmText").textContent = `Record #${id} will be removed permanently.`;
+  $("confirmDlg").showModal();
+}
+$("confirmNo").onclick = () => $("confirmDlg").close();
+$("confirmYes").onclick = async () => {
+  $("confirmDlg").close();
+  try {
+    await api("DELETE", url("/" + state.deleteId));
+    toast(`${cap(res().singular)} deleted`);
+    await load();
+    loadCounts();
+  } catch (err) {
+    toast(err.network ? "Can't reach the backend" : err.message, true);
+  }
+};
+
+/* ---------- Events ---------- */
+$("nav").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-key]");
+  if (!b) return;
+  state.key = b.dataset.key;
+  renderNav(); renderHeader(); load();
+});
+$("tableHost").addEventListener("click", (e) => {
+  const ed = e.target.closest("[data-edit]");
+  const de = e.target.closest("[data-del]");
+  if (ed) openForm(ed.dataset.edit);
+  if (de) askDelete(de.dataset.del);
+});
+$("addBtn").onclick = () => openForm(null);
+$("refresh").onclick = () => { load(); loadCounts(); };
+$("search").addEventListener("input", renderTable);
+$("baseUrl").addEventListener("change", (e) => {
+  baseUrl = e.target.value.trim() || DEFAULT_BASE_URL;
+  try { localStorage.setItem("school.baseUrl", baseUrl); } catch (err) {}
+  load(); loadCounts();
+});
+
+/* ---------- Start ---------- */
+renderNav(); renderHeader();
+load().then(loadCounts);
+</script>
+</body>
 </html>
