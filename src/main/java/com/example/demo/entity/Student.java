@@ -16,8 +16,11 @@ public class Student {
     @Column (name="Student_ID")
     private int studentId;
 
-    @Column (name="Student_Name")
-    private String StudentName;
+    @Column (name="Student_First_Name")
+    private String studentFirstName;
+
+    @Column (name="Student_Last_Name")
+    private String studentLastName;
 
     @Column (name="Student_Age")
     private int StudentAge;
@@ -25,14 +28,19 @@ public class Student {
     @Column (name="Student_Phone_Number")
     private String StudentPhone;
 
+    @Column (name="Student_Email")
+    private String StudentEmail;
+
     //default constructor
     public Student(){
     }
-    public Student(int studentId, String studentName, int studentAge, String studentPhone) {
+    public Student(int studentId, String studentFirstName, String studentLastName, int studentAge, String studentPhone, String studentEmail) {
         this.studentId = studentId;
-        StudentName = studentName;
+        this.studentFirstName = studentFirstName;
+        this.studentLastName = studentLastName;
         StudentAge = studentAge;
         StudentPhone = studentPhone;
+        StudentEmail = studentEmail;
     }
 
     public int getStudentId() {
@@ -43,12 +51,20 @@ public class Student {
         this.studentId = studentId;
     }
 
-    public String getStudentName() {
-        return StudentName;
+    public String getStudentFirstName() {
+        return studentFirstName;
     }
 
-    public void setStudentName(String studentName) {
-        StudentName = studentName;
+    public void setStudentFirstName(String studentFirstName) {
+        this.studentFirstName = studentFirstName;
+    }
+
+    public String getStudentLastName() {
+        return studentLastName;
+    }
+
+    public void setStudentLastName(String studentLastName) {
+        this.studentLastName = studentLastName;
     }
 
     public int getStudentAge() {
@@ -66,6 +82,15 @@ public class Student {
     public void setStudentPhone(String studentPhone) {
         StudentPhone = studentPhone;
     }
+
+    public String getStudentEmail() {
+        return StudentEmail;
+    }
+
+    public void setStudentEmail(String studentEmail) {
+        StudentEmail = studentEmail;
+    }
+
 
     
 }
